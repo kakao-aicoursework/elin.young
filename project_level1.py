@@ -2,12 +2,8 @@ import os
 import json
 import openai
 import chromadb
-# import tkinter as tk
 import pandas as pd
 import fire
-# from tkinter import scrolledtext
-# import tkinter.filedialog as filedialog
-openai.api_key = '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'
 
 
 class chatbot():
@@ -132,7 +128,7 @@ class chatbot():
                 print("카카오채널 assistant가 종료 되었습니다")
                 break
             else:
-                self.message_log.append(user_input)
+                self.message_log.append({"role": "user", "content": "user_input"})
                 res = self.channel_assistant(self.message_log, functions=self.functions, max_tokens=1024)
                 print(res)
 
