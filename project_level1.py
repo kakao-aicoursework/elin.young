@@ -4,9 +4,9 @@ import openai
 import chromadb
 import pandas as pd
 import fire
+TOKENIZERS_PARALLELISM=True
 
-
-class chatbot():
+class ChatBot():
     def __init__(self, conf_fname: str = './Config/chatbot.json') -> None:
         f = open(conf_fname)
         self.conf = json.loads(f.read())
@@ -15,8 +15,15 @@ class chatbot():
             name=self.conf["collection_name"],
             metadata={"hnsw:space": "cosine"}
         )
-        self.message_log = list(self.conf["message_log"])
-        self.functions = list(self.conf["functions"])
+        self.message_log = [
+            {
+                "role": "system",
+                "content": "You are an assistant of kakaochannel. Your user will be Korean, so communicate in Korean. At first, Briefly introduce about kakaochannel in one line. After then answer to user's requests. Please answer the description within 500 to 600 words."
+            }
+        ]
+        
+        self.functions = []
+        self.functions.append(self.conf["functions"])
         openai.api_key = self.conf["openai_api_key"]
 
     def text_to_json(self, file_path:str):
@@ -56,14 +63,14 @@ class chatbot():
             ids=ids
         )
 
-    def get_kakaochannel_info(self, query_texts: str, n_results: int = 5):
+    def get_kakaochannel_info(self, query_texts: str):
 
         # DB 쿼리
         results = self.collection.query(
             query_texts=[query_texts],
-            n_results=n_results,
+            n_results=10,
         )
-        items = results.documents[0]
+        items = results["documents"][0]
 
         srchres = []
 
@@ -120,10 +127,9 @@ class chatbot():
         self.save_data_db(self.conf["file_path"])
 
         print("안녕하세요 카카오채널 비서입니다. 무엇을 도와드릴까요?")
+        print("종료를 원하시면 '종료' 또는 'quit'을 입력하세요")
         while True:
-            print("종료를 원하시면 '종료' 또는 'quit'을 입력하세요")
             user_input = input()
-            print(user_input)
             if (('종료' in user_input) | ('quit' in user_input)):
                 print("카카오채널 assistant가 종료 되었습니다")
                 break
@@ -133,4 +139,4 @@ class chatbot():
                 print(res)
 
 if __name__ == '__main__':
-    fire.Fire(chatbot)
+    fire.Fire(ChatBot)
