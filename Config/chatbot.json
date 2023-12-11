@@ -1,0 +1,27 @@
+{
+    "file_path": "./projects/project_data_카카오톡채널.txt",
+    "collection_name": "kakao_channel",
+    "openai_api_key":"",
+    "message_log": {
+        "role": "system",
+        "content": "You are an assistant of kakaochannel. Your user will be Korean, so communicate in Korean. At first, introduce about kakaochannel and answer to user's requests. Please answer the description within 500 to 600 words."
+    },
+    "functions": {
+        "name": "get_kakaochannel_info",
+        "description": "Search for services provided by a channel.",
+        "parameters": {
+            "type": "string",
+            "properties":{ 
+                "query_texts": {
+                    "type": "string",
+                    "description": "Word to search ex. Features, how to use it"
+                    },
+                "n_results": {
+                    "type": "int",
+                    "description":"number of result output"
+                    }
+                },
+            "required": ["query_texts","n_results"]
+            }
+    }
+}
