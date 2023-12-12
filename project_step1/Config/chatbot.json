@@ -1,6 +1,7 @@
 {
     "file_path": "./projects/project_data_카카오톡채널.txt",
     "collection_name": "kakao_channel",
+    "openai_api_key":"",
     "functions": {
         "name": "get_kakaochannel_info",
         "description": "Search for services provided by a channel.",
