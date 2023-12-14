@@ -1,0 +1,5 @@
+{
+    "openai_api_key":"",
+    "file_path": "../../projects/project_data_카카오싱크.txt",
+    "system_message":"assistant는 user의 요청을 적절한 쿼리로 요약해",
+}
