@@ -1,5 +1,5 @@
 {
-    "openai_api_key":"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",
+    "openai_api_key":"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",
     "file_path": "../../projects/project_data_카카오싱크.txt",
     "system_message":"assistant는 user의 요청을 적절한 쿼리로 요약해"
 }

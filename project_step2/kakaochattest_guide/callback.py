@@ -7,15 +7,26 @@ import openai
 from project_level2 import ChatBot
 
 # 환경 변수 처리 필요!
-openai.api_key = ''
-SYSTEM_MSG = "당신은 카카오 서비스 제공자입니다."
 logger = logging.getLogger("Callback")
 
 async def callback_handler(request: ChatbotRequest) -> dict:
 
     # ===================== start =================================
     chatbot = ChatBot()
-    ChatBot.run()
+    output_text = ChatBot.run()
+    
+    payload = {
+        "version": "2.0",
+        "template": {
+            "outputs": [
+                {
+                    "simpleText": {
+                        "text": output_text
+                    }
+                }
+            ]
+        }
+    }
     
     # ===================== end =================================
     # 참고링크1 : https://kakaobusiness.gitbook.io/main/tool/chatbot/skill_guide/ai_chatbot_callback_guide
